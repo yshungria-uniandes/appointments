@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="bg-dark p-3 d-flex justify-content-between" style="height: 70px;">
+    <h2 class="text-light">Add new appointment</h2>
+    <div>
+        <a class="btn btn-success" href="/dashboard">Dashboard</a>
+        <a class="btn btn-success" href="/logout">Logout</a>
+    </div>
+</div>
+<main class="mx-auto my-4 p-3" style="width: 900px;">
+    {% with messages = get_flashed_messages(category_filter = ["create"]) %}
+    {% if messages %}
+        {% for message in messages %}
+        <p class="form-text bg-danger text-dark fs-6">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form action="/appointments/new" method="POST">
+        <div class="d-flex justify-content-between">
+            <div class="col-5">
+                <div class="mb-3">
+                    <label for="task" class="form-label">Task</label>
+                    <input type="text" class="form-control" id="task" name="task">
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="Pending" selected>Pending</option>
+                        <option value="Skipped">Skipped</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-5">
+                <div>
+                    <label class="d-block" for="date">Date</label>
+                    <input type="date" id="date" name="date">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit" value="submit">Create</button>
+    </form>
+</main>
+
+{% endblock %}

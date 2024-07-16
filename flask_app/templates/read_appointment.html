@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="bg-dark p-3 d-flex justify-content-between" style="height: 70px;">
+    <h2 class="text-light">Welcome {% if user %}{{ user.first_name }}{% endif %}</h2>
+    <div>
+        <a class="btn btn-success" href="/appointments/new">Create appointment</a>
+        <a class="btn btn-success" href="/logout">Logout</a>
+    </div>
+</div>
+<main>
+    <h3>Your current appointments</h3>
+    <table class="table border border-dark mx-auto" style="width: 800px;">
+        <thead>
+            <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Status</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody> 
+         
+            <tr>
+                <td>{{ appointment.task }}</td>
+                <td>
+                    {% if appointment.status == 'Omitted' %} Omitted {% endif %}
+                    {% if appointment.status == 'Pending' %} Pending {% endif %}
+                    {% if appointment.status == 'Done' %} Done {% endif %}
+                </td>
+                <td>{{ appointment.created_at }}</td>
+                <td>{{ appointment.updated_at }}</td>
+                <td class="d-flex justify-content-between">
+                    {% if appointment.status == 'Pending' %}
+                    <a class="btn btn-success" href="/appointments/edit/{{ appointment.id }}">Edit</a>
+                    <a class="btn btn-danger" href="/appointments/delete/{{ appointment.id }}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}

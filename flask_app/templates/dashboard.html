@@ -1,0 +1,63 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="bg-dark p-3 d-flex justify-content-between" style="height: 70px;">
+    <h2 class="text-light">Welcome {{ user.first_name }}</h2>
+    <div>
+        <a class="btn btn-success" href="/appointments/new">Create appointment</a>
+        <a class="btn btn-success" href="/logout">Logout</a>
+    </div>
+</div>
+<main>
+    <h3>Your current appointments</h3>
+    <table class="table border border-dark mx-auto" style="width: 800px;">
+        <thead>
+            <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.task }}</td>
+                <td>{{ appointment.created_at }}</td>
+                <td>{{ appointment.status }}</td>
+               
+                <td>
+                    <!-- Acciones para cada cita -->
+                    <a class="btn btn-primary" href="/appointments/{{ appointment.id }}">View</a>
+                    <a class="btn btn-success" href="/appointments/edit/{{ appointment.id }}">Edit</a>
+                    <a class="btn btn-danger" href="/appointments/delete/{{ appointment.id }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+<main>
+    <h3>Your past appointments</h3>
+    <table class="table border border-dark mx-auto" style="width: 800px;">
+        <thead>
+            <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            {% if appointment.status == 'Done' %}
+            <tr>
+                <td>{{ appointment.task }}</td>
+                <td>{{ appointment.created_at }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+    </table>
+</main>
+
+{% endblock %}
+
